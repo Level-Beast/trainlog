@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<meta name="theme-color" content="#16181D">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TrainLog">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>TrainLog</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="app">
+
+  <!-- HEADER -->
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">
+        <i class="bar b1"></i><i class="bar b2"></i><i class="bar b3"></i>
+      </span>
+      <span class="brand-name">TrainLog</span>
+    </div>
+    <button id="streakChip" class="streak-chip" aria-label="View streak details">
+      <span id="streakNum">0</span><span class="streak-label">day streak</span>
+    </button>
+  </header>
+
+  <!-- MAIN VIEWS -->
+  <main id="views">
+
+    <!-- TODAY -->
+    <section id="view-today" class="view">
+      <div class="date-row">
+        <div>
+          <div id="todayDateLabel" class="eyebrow">TODAY</div>
+          <h1 id="todayDateFull" class="page-title"></h1>
+        </div>
+        <div class="week-strip" id="weekStrip"></div>
+      </div>
+      <div id="todayList" class="stack"></div>
+    </section>
+
+    <!-- BUILD -->
+    <section id="view-build" class="view" hidden>
+      <div class="subnav" id="buildSubnav">
+        <button class="subnav-btn active" data-btab="schedule">Schedule</button>
+        <button class="subnav-btn" data-btab="routines">Routines</button>
+        <button class="subnav-btn" data-btab="exercises">Exercises</button>
+      </div>
+
+      <div id="btab-schedule" class="btab">
+        <p class="hint">Assign routines to days. A routine can repeat on as many days as you want — build it once, reuse it.</p>
+        <div id="scheduleGrid" class="stack"></div>
+      </div>
+
+      <div id="btab-routines" class="btab" hidden>
+        <button class="btn-primary full" id="newRoutineBtn">+ New routine</button>
+        <div id="routinesList" class="stack"></div>
+      </div>
+
+      <div id="btab-exercises" class="btab" hidden>
+        <button class="btn-primary full" id="newExerciseBtn">+ New exercise</button>
+        <div id="exercisesList" class="stack"></div>
+      </div>
+    </section>
+
+    <!-- HISTORY -->
+    <section id="view-history" class="view" hidden>
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-num" id="statStreak">0</div>
+          <div class="stat-label">day streak</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="statConsistency">0%</div>
+          <div class="stat-label">30-day consistency</div>
+        </div>
+      </div>
+      <div class="settings-row">
+        <span>Streak counts a day when you:</span>
+        <select id="streakModeSelect">
+          <option value="full">Fully complete plan</option>
+          <option value="any">Show up at all (any effort)</option>
+          <option value="threshold">Hit a minimum %</option>
+        </select>
+        <div id="thresholdRow" class="threshold-row" hidden>
+          <input type="range" id="thresholdSlider" min="10" max="90" step="10" value="50">
+          <span id="thresholdVal">50%</span>
+        </div>
+      </div>
+      <div class="eyebrow" style="margin-top:20px">LAST 8 WEEKS</div>
+      <div id="calendarGrid" class="calendar-grid"></div>
+      <div class="eyebrow" style="margin-top:20px">SESSION LOG</div>
+      <div id="sessionLog" class="stack"></div>
+    </section>
+
+  </main>
+
+  <!-- BOTTOM NAV -->
+  <nav class="bottomnav">
+    <button class="nav-btn active" data-view="today">
+      <span class="nav-ico">●</span>Today
+    </button>
+    <button class="nav-btn" data-view="build">
+      <span class="nav-ico">▤</span>Build
+    </button>
+    <button class="nav-btn" data-view="history">
+      <span class="nav-ico">▲</span>History
+    </button>
+  </nav>
+
+  <!-- ACTIVE SESSION OVERLAY -->
+  <div id="sessionOverlay" class="overlay" hidden>
+    <div class="overlay-inner">
+      <div class="session-header">
+        <button id="sessionClose" class="icon-btn" aria-label="Tap out">✕</button>
+        <div class="session-title" id="sessionRoutineName">Routine</div>
+        <div class="session-progress" id="sessionProgress">1 / 5</div>
+      </div>
+      <div id="sessionBody" class="session-body"></div>
+    </div>
+  </div>
+
+  <!-- GENERIC MODAL -->
+  <div id="modalOverlay" class="overlay" hidden>
+    <div class="modal-inner" id="modalInner"></div>
+  </div>
+
+  <!-- TOAST -->
+  <div id="toast" class="toast" hidden></div>
+
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
